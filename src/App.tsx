@@ -1,10 +1,12 @@
+import { Outlet } from 'react-router'
 import './App.css'
-import { Button } from './components/ui/button'
+import Navbar from './components/layout/Navbar'
 
 function App() {
   return (
-    <div>
-      <Button>Click me</Button>
+    <div className='container mx-auto'>
+      <Navbar/>
+      <Outlet/>
     </div>
   )
 }
