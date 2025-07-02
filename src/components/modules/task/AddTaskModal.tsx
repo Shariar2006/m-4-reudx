@@ -17,14 +17,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { addTask } from "@/redux/features/task/taskSlice"
-import { useAppDispatch } from "@/redux/hook"
-import type { ITask } from "@/types"
+import { users } from "@/redux/features/user/userSlice"
+import { useAppDispatch, useAppSelector } from "@/redux/hook"
+import type { ITask, IUser } from "@/types"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 
 export function AddTaskModal() {
 
+    const usersData = useAppSelector(users)
     const form = useForm()
     const dispatch = useAppDispatch()
 
@@ -87,6 +89,31 @@ export function AddTaskModal() {
                                                 <SelectItem value="Low">Low</SelectItem>
                                                 <SelectItem value="Medium">Medium</SelectItem>
                                                 <SelectItem value="High">High</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </FormItem>
+                                )}
+                            />
+                            
+                            <FormField
+                                control={form.control}
+                                name="assignTo"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Assign To</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl className="w-full">
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a user to set" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {
+                                                usersData.map((user:IUser)=>
+
+                                                    <SelectItem value={user.id}>{user.name}</SelectItem>
+                                                )
+                                                }
                                             </SelectContent>
                                         </Select>
                                     </FormItem>

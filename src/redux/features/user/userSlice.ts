@@ -13,7 +13,7 @@ const initialState: IInitialState = {
             name: "emon"
         },
         {
-            id: "fdskjak",
+            id: "fdsknjjak",
             name: "shariar"
         },
     ],
@@ -38,20 +38,6 @@ const userSlice = createSlice({
         }
     }
 })
-
-export const tasksFilter = (state: RootState) => {
-    const filter = state.todos.filter
-
-    if (filter === 'Low') {
-        return state.todos.tasks.filter((task) => task.priority === 'Low')
-    } else if (filter === 'Medium') {
-        return state.todos.tasks.filter((task) => task.priority === 'Medium')
-    } else if (filter === 'High') {
-        return state.todos.tasks.filter((task) => task.priority === 'High')
-    } else {
-        return state.todos.tasks
-    }
-}
 
 export const users = (state: RootState) => {
     return state.users.users

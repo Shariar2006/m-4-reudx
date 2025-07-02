@@ -12,7 +12,7 @@ const initialState: IInitialState = {
     filter: 'all'
 }
 
-type DriftTask = Pick<ITask, "title" | "description" | "dueDate" | "priority">
+type DriftTask = Pick<ITask, "title" | "description" | "dueDate" | "priority" | "assignTo">
 
 const createTask = (taskData: DriftTask): ITask => {
     return { id: nanoid(), isCompleted: false, ...taskData }
