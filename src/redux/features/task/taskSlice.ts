@@ -16,7 +16,7 @@ const initialState: IInitialState = {
 type DriftTask = Pick<ITask, "title" | "description" | "dueDate" | "priority" | "assignTo">
 
 const createTask = (taskData: DriftTask): ITask => {
-    return { id: nanoid(), isCompleted: false, ...taskData }
+    return { _id: nanoid(), isCompleted: false, ...taskData }
 }
 
 const taskSlice = createSlice({
@@ -29,11 +29,11 @@ const taskSlice = createSlice({
         },
         toggleCompleteState: (state, action: PayloadAction<string>) => {
             state.tasks.forEach((task) =>
-                task.id === action.payload ? (task.isCompleted = !task.isCompleted) : task
+                task._id === action.payload ? (task.isCompleted = !task.isCompleted) : task
             )
         },
         deleteTask: (state, action: PayloadAction<string>) => {
-            state.tasks = state.tasks.filter((task) => task.id !== action.payload)
+            state.tasks = state.tasks.filter((task) => task._id !== action.payload)
         },
         filterUpdate: (state, action: PayloadAction<'all' | 'Low' | 'Medium' | 'High'>) => {
             state.filter = action.payload

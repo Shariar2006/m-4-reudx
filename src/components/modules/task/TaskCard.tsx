@@ -25,10 +25,10 @@ export default function TaskCard({task}: IProps) {
                     <h1 className={`${task.isCompleted && 'line-through'}`}>{task?.title}</h1>
                 </div>
                 <div className="flex gap-3 items-center">
-                    <Button onClick={()=>dispatch(deleteTask(task.id))} variant="link" className="p-0 Otext-red-500">
+                    <Button onClick={()=>dispatch(deleteTask(task._id))} variant="link" className="p-0 Otext-red-500">
                         <Trash2 />
                     </Button>
-                    <Checkbox checked={task.isCompleted} onClick={()=> dispatch(toggleCompleteState(task.id))} />
+                    <Checkbox checked={task.isCompleted} onClick={()=> dispatch(toggleCompleteState(task._id))} />
                 </div>
             </div>
 
