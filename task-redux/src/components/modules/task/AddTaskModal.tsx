@@ -16,26 +16,40 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
-import { addTask } from "@/redux/features/task/taskSlice"
-import { users } from "@/redux/features/user/userSlice"
-import { useAppDispatch, useAppSelector } from "@/redux/hook"
-import type { ITask, IUser } from "@/types"
+import { useCreateTaskMutation } from "@/redux/api/baseApi"
+// import { addTask } from "@/redux/features/task/taskSlice"
+// import { users } from "@/redux/features/user/userSlice"
+// import { useAppDispatch, useAppSelector } from "@/redux/hook"
+// import type { ITask, IUser } from "@/types"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
+import { useState } from "react"
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 
 export function AddTaskModal() {
+    const [open, setOpen] = useState(false)
 
-    const usersData = useAppSelector(users)
+    // const usersData = useAppSelector(users)
     const form = useForm()
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
+    const [createTask, {isLoading}] = useCreateTaskMutation()
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        dispatch(addTask(data as ITask))
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        // dispatch(addTask(data as ITask))
+        console.log(data)
+        const taskData = {
+            ...data,
+            isCompleted: false
+        }
+
+        const res = await createTask(taskData)
+        console.log(res)
+        form.reset()
+        setOpen(false)
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <form>
                 <DialogTrigger asChild>
                     <Button variant="outline">Add Task</Button>
@@ -95,7 +109,7 @@ export function AddTaskModal() {
                                 )}
                             />
                             
-                            <FormField
+                            {/* <FormField
                                 control={form.control}
                                 name="assignTo"
                                 render={({ field }) => (
@@ -118,7 +132,7 @@ export function AddTaskModal() {
                                         </Select>
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
 
                             <FormField
                                 control={form.control}
@@ -163,7 +177,7 @@ export function AddTaskModal() {
                                 <DialogClose asChild>
                                     <Button variant="outline">Cancel</Button>
                                 </DialogClose>
-                                <Button type="submit">Save changes</Button>
+                                <Button type="submit">{isLoading ? 'Please wait....' : 'Save changes'}</Button>
                             </DialogFooter>
                         </form>
                     </Form>
