@@ -32,7 +32,8 @@ export default function TaskCard({task}: IProps) {
                 </div>
             </div>
 
-            <h4>Assigned to: {task.assignTo ? task.assignTo : 'No one'}</h4>
+            <h4>Assigned to: {task.assignTo ? task.assignTo 
+                 : 'No one'}</h4>
             <p className="mt-5">{task?.description}</p>
         </div>
     )
