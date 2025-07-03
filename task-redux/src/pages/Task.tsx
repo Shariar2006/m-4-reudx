@@ -10,12 +10,17 @@ const Task = () => {
 
     // const tasksData = useAppSelector(tasksFilter);
     const dispatch = useAppDispatch();
-    const {data, isLoading} = useGetTaskQuery()
+    const { data, isLoading } = useGetTaskQuery(undefined, {
+        pollingInterval: 30000,
+        refetchOnMountOrArgChange: true,
+        refetchOnReconnect: true,
+        refetchOnFocus: true,
+    })
     console.log(data)
 
-if(isLoading){
-    return <>Loading....</>
-}
+    if (isLoading) {
+        return <>Loading....</>
+    }
 
     return (
         <div className="max-w-4xl mx-auto space-y-5">
@@ -23,10 +28,10 @@ if(isLoading){
                 <h4>Tasks</h4>
                 <Tabs defaultValue="all" className="">
                     <TabsList>
-                        <TabsTrigger onClick={()=>dispatch(filterUpdate('all'))} value="all">All</TabsTrigger>
-                        <TabsTrigger onClick={()=>dispatch(filterUpdate('Low'))} value="Low">Low</TabsTrigger>
-                        <TabsTrigger onClick={()=>dispatch(filterUpdate('Medium'))} value="Medium">Medium</TabsTrigger>
-                        <TabsTrigger onClick={()=>dispatch(filterUpdate('High'))} value="High">High</TabsTrigger>
+                        <TabsTrigger onClick={() => dispatch(filterUpdate('all'))} value="all">All</TabsTrigger>
+                        <TabsTrigger onClick={() => dispatch(filterUpdate('Low'))} value="Low">Low</TabsTrigger>
+                        <TabsTrigger onClick={() => dispatch(filterUpdate('Medium'))} value="Medium">Medium</TabsTrigger>
+                        <TabsTrigger onClick={() => dispatch(filterUpdate('High'))} value="High">High</TabsTrigger>
                     </TabsList>
                 </Tabs>
                 <AddTaskModal></AddTaskModal>
